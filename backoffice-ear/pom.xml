@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.code2ever</groupId>
+        <artifactId>ecommerce-backoffice</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>backoffice-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.code2ever</groupId>
+            <artifactId>backoffice-web</artifactId>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.code2ever</groupId>
+            <artifactId>backoffice-domain</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.code2ever</groupId>
+            <artifactId>backoffice-application</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.code2ever</groupId>
+            <artifactId>backoffice-infrastructure</artifactId>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <!-- mete los jars en /lib dentro del ear -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+
+                    <!-- importante: que el WAR quede como módulo web -->
+                    <modules>
+                        <webModule>
+                            <groupId>com.code2ever</groupId>
+                            <artifactId>backoffice-web</artifactId>
+                            <contextRoot>/backoffice</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

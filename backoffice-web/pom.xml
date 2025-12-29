@@ -19,7 +19,6 @@
             <artifactId>backoffice-application</artifactId>
         </dependency>
 
-        <!-- API completa del Web Profile (Servlet, CDI, JSF, JAX-RS, etc.) -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-web-api</artifactId>
@@ -29,7 +28,6 @@
 
     <build>
         <plugins>
-            <!-- Hereda config del parent (failOnMissingWebXml=false) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>

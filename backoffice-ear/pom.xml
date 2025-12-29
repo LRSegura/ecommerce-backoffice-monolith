@@ -45,10 +45,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
                 <configuration>
-                    <!-- mete los jars en /lib dentro del ear -->
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
-
-                    <!-- importante: que el WAR quede como módulo web -->
                     <modules>
                         <webModule>
                             <groupId>com.code2ever</groupId>

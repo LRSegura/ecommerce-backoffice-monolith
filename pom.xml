@@ -19,23 +19,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!-- Java -->
         <maven.compiler.release>21</maven.compiler.release>
-
-        <!-- Jakarta EE platform -->
         <jakartaee.version>11.0.0</jakartaee.version>
-
-        <!-- Plugins -->
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <maven.war.plugin.version>3.4.0</maven.war.plugin.version>
         <maven.ear.plugin.version>3.3.0</maven.ear.plugin.version>
     </properties>
 
-    <!-- Aquí “apuntas” a Jakarta EE 11 -->
+
     <dependencyManagement>
         <dependencies>
-            <!-- 1) Gestionar versiones de tus módulos internos -->
             <dependency>
                 <groupId>com.code2ever</groupId>
                 <artifactId>backoffice-domain</artifactId>
@@ -61,7 +54,6 @@
                 <type>war</type>
             </dependency>
 
-            <!-- 2) Gestionar la versión del "jakartaee-web-api" -->
             <dependency>
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-web-api</artifactId>
@@ -76,13 +68,19 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.42</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
-                <!-- Compiler centralizado -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -92,7 +90,6 @@
                     </configuration>
                 </plugin>
 
-                <!-- War plugin centralizado (evita error web.xml) -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
@@ -102,7 +99,6 @@
                     </configuration>
                 </plugin>
 
-                <!-- Ear plugin centralizado -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-ear-plugin</artifactId>

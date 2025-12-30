@@ -4,8 +4,6 @@ import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.inventory.ProductStock;
 import com.code2ever.backoffice.domain.pricing.ProductPrice;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +45,14 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductStock> productStocks;
+
+    public boolean isActive() {
+        return status == ProductStatus.ACTIVE;
+    }
+
+    public boolean isInactive() {
+        return status == ProductStatus.INACTIVE;
+    }
 
     @Override
     public String toString() {

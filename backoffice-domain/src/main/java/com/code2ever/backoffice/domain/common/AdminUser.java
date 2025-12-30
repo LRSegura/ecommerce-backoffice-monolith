@@ -4,6 +4,8 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +16,12 @@ import lombok.Setter;
 @AttributeOverride(name = "id", column = @Column(name = "admin_user_id"))
 public class AdminUser extends BaseEntity {
 
+    @NotNull(message = "Admin user name cannot be null")
     @Column(unique = true, nullable = false)
     private String userName;
 
+    @NotNull(message = "Admin user email cannot be null")
+    @Email(message = "Invalid email address")
     @Column(unique = true, nullable = false)
     private String email;
 

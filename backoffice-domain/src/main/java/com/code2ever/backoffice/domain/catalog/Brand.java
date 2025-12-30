@@ -2,6 +2,7 @@ package com.code2ever.backoffice.domain.catalog;
 
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @AttributeOverride(name = "id", column = @Column(name = "brand_id"))
 public class Brand extends BaseEntity {
 
+    @NotNull(message = "Brand name cannot be null")
     @Column(unique = true, nullable = false)
     private String name;
 

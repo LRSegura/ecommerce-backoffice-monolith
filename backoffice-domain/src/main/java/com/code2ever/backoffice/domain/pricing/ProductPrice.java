@@ -3,6 +3,7 @@ package com.code2ever.backoffice.domain.pricing;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.catalog.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @AttributeOverride(name = "id", column = @Column(name = "product_price_id"))
 public class ProductPrice extends BaseEntity {
 
+    @NotNull(message = "Product price cannot be null")
     @Column(precision = 19, scale = 4, nullable = false)
     private BigDecimal price;
 

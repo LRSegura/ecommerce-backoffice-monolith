@@ -3,6 +3,7 @@ package com.code2ever.backoffice.domain.order;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.catalog.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,10 +16,14 @@ import java.math.BigDecimal;
 @AttributeOverride(name = "id", column = @Column(name = "order_item_id"))
 public class OrderItem extends BaseEntity {
 
-    @Column
+    @NotNull(message = "Order item unit price cannot be null")
+    @Column(nullable = false)
     private BigDecimal unitPrice;
+
+    @NotNull(message = "Order item quantity cannot be null")
     @Column(nullable = false)
     private Integer quantity;
+
     @Column
     private BigDecimal totalPrice;
 

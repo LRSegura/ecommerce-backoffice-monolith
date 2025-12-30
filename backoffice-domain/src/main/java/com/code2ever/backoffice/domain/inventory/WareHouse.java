@@ -5,6 +5,7 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +16,16 @@ import lombok.Setter;
 @AttributeOverride(name = "id", column = @Column(name = "ware_house_id"))
 public class WareHouse extends BaseEntity {
 
-    @Column
+    @NotNull(message = "Ware house name cannot be null")
+    @Column(unique = true, nullable = false)
     private String name;
+
     @Column
     private String location;
+
     @Column
     private String description;
+
     @Column
     private Boolean active;
 

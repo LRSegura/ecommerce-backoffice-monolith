@@ -4,6 +4,9 @@ import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.inventory.ProductStock;
 import com.code2ever.backoffice.domain.pricing.ProductPrice;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +19,11 @@ import java.util.List;
 @AttributeOverride(name = "id", column = @Column(name = "product_id"))
 public class Product extends BaseEntity {
 
+    @NotNull(message = "Product SKU cannot be null")
     @Column(unique = true, nullable = false)
     private String sku;
 
+    @NotNull(message = "Product name cannot be null")
     @Column(unique = true, nullable = false)
     private String name;
 

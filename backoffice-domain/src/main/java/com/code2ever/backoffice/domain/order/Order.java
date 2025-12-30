@@ -3,6 +3,7 @@ package com.code2ever.backoffice.domain.order;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.customer.Customer;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,14 +16,18 @@ import java.util.List;
 @SequenceGenerator(name = "entity_seq", sequenceName = "order_seq")
 @AttributeOverride(name = "id", column = @Column(name = "order_id"))
 public class Order extends BaseEntity {
-    @Column
+
+    @NotNull(message = "Order number cannot be null")
+    @Column(unique = true, nullable = false)
     private String orderNumber;
 
-    @Column
+    @NotNull(message = "Order status cannot be null")
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @Column
+    @NotNull(message = "Order total amount cannot be null")
+    @Column(nullable = false)
     private BigDecimal totalAmount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)

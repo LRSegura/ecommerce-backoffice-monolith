@@ -3,6 +3,7 @@ package com.code2ever.backoffice.domain.inventory;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.catalog.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,11 @@ import lombok.Setter;
 ))
 public class ProductStock extends BaseEntity {
 
+    @NotNull(message = "Product stock quantity cannot be null")
     @Column(nullable = false)
     private Long quantityAvailable = 0L;
 
+    @NotNull(message = "Product stock reserved quantity cannot be null")
     @Column(nullable = false)
     private Long reservedQuantity = 0L;
 

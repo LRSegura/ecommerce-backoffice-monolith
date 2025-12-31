@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "product_price_seq")
 @AttributeOverride(name = "id", column = @Column(name = "product_price_id"))
 public class ProductPrice extends BaseEntity {
 

@@ -1,4 +1,4 @@
-package com.code2ever.backoffice.application.product.repository;
+package com.code2ever.backoffice.application.product.port;
 
 import com.code2ever.backoffice.domain.catalog.Product;
 

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
-public record DtoChangeProductPrice(
+public record ChangeProductPriceCommand(
         @NotNull
         @Positive
         BigDecimal newPrice,

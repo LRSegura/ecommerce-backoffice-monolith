@@ -3,7 +3,7 @@ package com.code2ever.backoffice.application.product.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record DtoUpdateProduct(
+public record UpdateProductCommand(
         @NotBlank
         String name,
 

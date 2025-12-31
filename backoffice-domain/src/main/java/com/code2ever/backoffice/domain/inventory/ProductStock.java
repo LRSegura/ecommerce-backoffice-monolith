@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "product_stock_seq")
 @AttributeOverride(name = "id", column = @Column(name = "product_stock_id"))
 @Table(uniqueConstraints = @UniqueConstraint(
         columnNames = {"product_id", "warehouse_id"}

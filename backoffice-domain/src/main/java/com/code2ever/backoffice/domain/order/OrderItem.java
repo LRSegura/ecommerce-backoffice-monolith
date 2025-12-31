@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "order_item_seq")
 @AttributeOverride(name = "id", column = @Column(name = "order_item_id"))
 public class OrderItem extends BaseEntity {
 

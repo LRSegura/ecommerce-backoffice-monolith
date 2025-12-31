@@ -3,7 +3,6 @@ package com.code2ever.backoffice.domain.common;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "admin_user_seq")
 @AttributeOverride(name = "id", column = @Column(name = "admin_user_id"))
 public class AdminUser extends BaseEntity {
 

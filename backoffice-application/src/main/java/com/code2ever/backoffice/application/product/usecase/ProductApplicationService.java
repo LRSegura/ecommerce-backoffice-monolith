@@ -1,15 +1,15 @@
-package com.code2ever.backoffice.application.product.service;
+package com.code2ever.backoffice.application.product.usecase;
 
 import com.code2ever.backoffice.application.common.exception.BusinessRuleException;
 import com.code2ever.backoffice.application.common.exception.NotFoundException;
-import com.code2ever.backoffice.application.product.dto.DtoChangeProductPrice;
-import com.code2ever.backoffice.application.product.dto.DtoCreateProduct;
-import com.code2ever.backoffice.application.product.dto.DtoProductView;
-import com.code2ever.backoffice.application.product.dto.DtoUpdateProduct;
-import com.code2ever.backoffice.application.product.repository.BrandRepository;
-import com.code2ever.backoffice.application.product.repository.CategoryRepository;
-import com.code2ever.backoffice.application.product.repository.ProductPriceRepository;
-import com.code2ever.backoffice.application.product.repository.ProductRepository;
+import com.code2ever.backoffice.application.product.dto.ChangeProductPriceCommand;
+import com.code2ever.backoffice.application.product.dto.CreateProductCommand;
+import com.code2ever.backoffice.application.product.dto.ProductView;
+import com.code2ever.backoffice.application.product.dto.UpdateProductCommand;
+import com.code2ever.backoffice.application.product.port.BrandRepository;
+import com.code2ever.backoffice.application.product.port.CategoryRepository;
+import com.code2ever.backoffice.application.product.port.ProductPriceRepository;
+import com.code2ever.backoffice.application.product.port.ProductRepository;
 import com.code2ever.backoffice.domain.catalog.Brand;
 import com.code2ever.backoffice.domain.catalog.Category;
 import com.code2ever.backoffice.domain.catalog.Product;
@@ -35,7 +35,7 @@ public class ProductApplicationService {
     ProductPriceRepository productPriceRepository;
 
     @Transactional
-    public Long create(@Valid DtoCreateProduct dto) {
+    public Long create(@Valid CreateProductCommand dto) {
         if (productRepository.existsBySku(dto.sku())) {
             throw new BusinessRuleException("SKU already exists: " + dto.sku());
         }
@@ -62,7 +62,7 @@ public class ProductApplicationService {
     }
 
     @Transactional
-    public void update(Long productId, @Valid DtoUpdateProduct dto) {
+    public void update(Long productId, @Valid UpdateProductCommand dto) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found: " + productId));
 
@@ -81,7 +81,7 @@ public class ProductApplicationService {
     }
 
     @Transactional
-    public void changePrice(Long productId, @Valid DtoChangeProductPrice dto) {
+    public void changePrice(Long productId, @Valid ChangeProductPriceCommand dto) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found: " + productId));
 
@@ -93,7 +93,7 @@ public class ProductApplicationService {
     }
 
     @Transactional(Transactional.TxType.SUPPORTS)
-    public DtoProductView findById(Long productId) {
+    public ProductView findById(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found: " + productId));
 
@@ -105,6 +105,6 @@ public class ProductApplicationService {
         BigDecimal currentPrice = productPriceRepository.findCurrentPrice(product);
         String status = product.getStatus().getDescription();
 
-        return new DtoProductView(id, sku, name, brandName, categoryName, currentPrice, status);
+        return new ProductView(id, sku, name, brandName, categoryName, currentPrice, status);
     }
 }

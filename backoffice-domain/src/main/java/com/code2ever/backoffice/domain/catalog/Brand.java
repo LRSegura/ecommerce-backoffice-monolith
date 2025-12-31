@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "brand_seq")
 @AttributeOverride(name = "id", column = @Column(name = "brand_id"))
 public class Brand extends BaseEntity {
 

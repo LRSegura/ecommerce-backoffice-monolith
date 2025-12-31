@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "product_seq")
 @AttributeOverride(name = "id", column = @Column(name = "product_id"))
 public class Product extends BaseEntity {
 

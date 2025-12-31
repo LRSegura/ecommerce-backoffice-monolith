@@ -2,7 +2,7 @@ package com.code2ever.backoffice.application.product.dto;
 
 import java.math.BigDecimal;
 
-public record DtoProductView(
+public record ProductView(
         Long id,
         String sku,
         String name,

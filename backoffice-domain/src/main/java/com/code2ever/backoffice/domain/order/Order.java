@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "order_seq")
 @AttributeOverride(name = "id", column = @Column(name = "order_id"))
 public class Order extends BaseEntity {
 

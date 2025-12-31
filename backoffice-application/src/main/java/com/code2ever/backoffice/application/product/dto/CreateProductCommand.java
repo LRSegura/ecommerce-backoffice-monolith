@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
-public record DtoCreateProduct(
+public record CreateProductCommand(
         @NotBlank
         String sku,
 

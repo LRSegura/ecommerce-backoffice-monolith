@@ -10,7 +10,6 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "audit_log_seq")
 @AttributeOverride(name = "id", column = @Column(name = "audit_log_id"))
 public class AuditLog extends BaseEntity {
     @Column

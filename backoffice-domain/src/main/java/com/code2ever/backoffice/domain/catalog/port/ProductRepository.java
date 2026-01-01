@@ -1,6 +1,6 @@
-package com.code2ever.backoffice.application.product.port;
+package com.code2ever.backoffice.domain.catalog.port;
 
-import com.code2ever.backoffice.domain.catalog.Product;
+import com.code2ever.backoffice.domain.catalog.model.Product;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package com.code2ever.backoffice.domain.order;
 
 import com.code2ever.backoffice.domain.common.BaseEntity;
-import com.code2ever.backoffice.domain.catalog.Product;
+import com.code2ever.backoffice.domain.catalog.model.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

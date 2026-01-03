@@ -1,35 +1,35 @@
-package com.code2ever.backoffice.domain.catalog;
+package com.code2ever.backoffice.domain.catalog.category.model;
 
 import com.code2ever.backoffice.domain.common.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "brand_seq")
-@AttributeOverride(name = "id", column = @Column(name = "brand_id"))
-public class Brand extends BaseEntity {
+@AttributeOverride(name = "id", column = @Column(name = "category_id"))
+public class Category extends BaseEntity {
 
-    @NotNull(message = "Brand name cannot be null")
+    @NotNull(message = "Category name cannot be null")
     @Column(unique = true, nullable = false)
     private String name;
 
     @Column()
     private String description;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Product> products;
+    @Column()
+    private Boolean active;
 
     @Override
     public String toString() {
-        return "Brand{" +
+        return "Category{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", active=" + active +
                 '}' + super.toString();
     }
 }

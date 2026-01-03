@@ -1,4 +1,4 @@
-package com.code2ever.backoffice.domain.catalog;
+package com.code2ever.backoffice.domain.catalog.product.model;
 
 import lombok.Getter;
 

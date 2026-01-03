@@ -1,11 +1,11 @@
-package com.code2ever.backoffice.domain.catalog;
+package com.code2ever.backoffice.domain.catalog.product.model;
 
+import com.code2ever.backoffice.domain.catalog.brand.model.Brand;
+import com.code2ever.backoffice.domain.catalog.category.model.Category;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.inventory.ProductStock;
 import com.code2ever.backoffice.domain.pricing.ProductPrice;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "product_seq")
 @AttributeOverride(name = "id", column = @Column(name = "product_id"))
 public class Product extends BaseEntity {
 
@@ -47,6 +46,14 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductStock> productStocks;
+
+    public boolean isActive() {
+        return status == ProductStatus.ACTIVE;
+    }
+
+    public boolean isInactive() {
+        return status == ProductStatus.INACTIVE;
+    }
 
     @Override
     public String toString() {

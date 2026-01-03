@@ -17,6 +17,7 @@
         <dependency>
             <groupId>com.code2ever</groupId>
             <artifactId>backoffice-application</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

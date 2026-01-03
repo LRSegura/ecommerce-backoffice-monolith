@@ -12,7 +12,6 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "shipment_seq")
 @AttributeOverride(name = "id", column = @Column(name = "shipment_id"))
 public class Shipment extends BaseEntity {
 

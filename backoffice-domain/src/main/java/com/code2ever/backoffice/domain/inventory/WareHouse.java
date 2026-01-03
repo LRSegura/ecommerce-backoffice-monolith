@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "ware_house_seq")
 @AttributeOverride(name = "id", column = @Column(name = "ware_house_id"))
 public class WareHouse extends BaseEntity {
 

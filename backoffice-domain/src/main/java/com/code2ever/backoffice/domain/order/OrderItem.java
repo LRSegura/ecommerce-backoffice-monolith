@@ -1,7 +1,7 @@
 package com.code2ever.backoffice.domain.order;
 
 import com.code2ever.backoffice.domain.common.BaseEntity;
-import com.code2ever.backoffice.domain.catalog.Product;
+import com.code2ever.backoffice.domain.catalog.product.model.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(name = "entity_seq", sequenceName = "order_item_seq")
 @AttributeOverride(name = "id", column = @Column(name = "order_item_id"))
 public class OrderItem extends BaseEntity {
 

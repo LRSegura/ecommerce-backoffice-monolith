@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>E-commerce Backoffice</title>
+</h:head>
+
+<h:body>
+    <div class="layout-wrapper">
+        <p:menubar>
+            <p:menuitem value="Products" icon="pi pi-box" url="products.xhtml"/>
+            <p:menuitem value="Brands" icon="pi pi-tag" url="brands.xhtml"/>
+            <p:menuitem value="Categories" icon="pi pi-list" url="categories.xhtml"/>
+        </p:menubar>
+
+        <div class="layout-content" style="padding: 2rem">
+            <ui:insert name="content" />
+        </div>
+    </div>
+</h:body>
+</html>

@@ -1,13 +1,17 @@
 package com.code2ever.backoffice.domain.catalog.category.model;
 
 
+import com.code2ever.backoffice.domain.catalog.product.model.Product;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +28,9 @@ public class Category extends BaseEntity {
 
     @Column()
     private Boolean active;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     @Override
     public String toString() {

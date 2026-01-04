@@ -3,32 +3,149 @@
                 xmlns:f="jakarta.faces.core"
                 xmlns:ui="jakarta.faces.facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="template.xhtml"> <ui:define name="content">
-    <div class="card">
-        <h1>Listado de Productos</h1>
+                template="template.xhtml">
 
-        <h:form>
-            <p:dataTable var="product" value="#{productController.products}"
-                         stripedRows="true" paginator="true" rows="10">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
 
-                <p:column headerText="SKU" sortBy="#{product.sku}">
-                    <h:outputText value="#{product.sku}"/>
-                </p:column>
+            <div class="card">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="New Product" icon="pi pi-plus"
+                                         actionListener="#{productController.prepareNewProduct}"
+                                         update=":dialogs:manage-product-content :dialogs:dialog-footer"
+                                         oncomplete="PF('manageProductDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
 
-                <p:column headerText="Nombre" sortBy="#{product.name}">
-                    <h:outputText value="#{product.name}"/>
-                </p:column>
+                <p:dataTable id="dt-products" var="product" value="#{productController.products}"
+                             stripedRows="true" paginator="true" rows="10" rowKey="#{product.id}">
 
-                <p:column headerText="Categoría">
-                    <h:outputText value="#{product.category.name}"/>
-                </p:column>
+                    <p:column headerText="SKU" sortBy="#{product.sku}" filterBy="#{product.sku}">
+                        <h:outputText value="#{product.sku}"/>
+                    </p:column>
 
-                <p:column headerText="Estado">
-                    <p:tag value="#{product.status}" severity="#{product.active ? 'success' : 'danger'}"/>
-                </p:column>
+                    <p:column headerText="Nombre" sortBy="#{product.name}" filterBy="#{product.name}">
+                        <h:outputText value="#{product.name}"/>
+                    </p:column>
 
-            </p:dataTable>
+                    <p:column headerText="Categoría" sortBy="#{product.category.name}">
+                        <h:outputText value="#{product.category.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Marca" sortBy="#{product.brand.name}">
+                        <h:outputText value="#{product.brand.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Estado">
+                        <p:tag value="#{product.status}" severity="#{product.active ? 'success' : 'danger'}"/>
+                    </p:column>
+
+                    <p:column exportable="false" headerText="Acciones">
+                        <p:commandButton icon="pi pi-pencil"
+                                         update=":dialogs:manage-product-content :dialogs:dialog-footer"
+                                         oncomplete="PF('manageProductDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this"
+                                         style="margin-right: .5rem"
+                                         actionListener="#{productController.selectProductForEdit(product)}">
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteProductDialog').show()">
+                            <f:setPropertyActionListener value="#{product}" target="#{productController.currentProduct}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
         </h:form>
-    </div>
-</ui:define>
+
+        <h:form id="dialogs">
+            <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                             message="¿Está seguro de eliminar este producto?" header="Confirmar" severity="warn">
+                <p:commandButton value="Sí" icon="pi pi-check"
+                                 actionListener="#{productController.onDeleteProduct}"
+                                 process="@this"
+                                 oncomplete="PF('deleteProductDialog').hide()"
+                                 update=":form:dt-products :form:messages" />
+                <p:commandButton value="No" type="button"
+                                 styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteProductDialog').hide()" />
+            </p:confirmDialog>
+
+            <p:dialog header="Product Details" showEffect="fade" modal="true"
+                      widgetVar="manageProductDialog" responsive="true" width="500">
+                <p:outputPanel id="manage-product-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty productController.currentProduct}">
+
+                        <div class="field">
+                            <p:outputLabel for="sku">SKU</p:outputLabel>
+                            <p:inputText id="sku" value="#{productController.currentProduct.sku}"
+                                         required="true"
+                                         disabled="#{productController.currentProduct.id != null}"/>
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="name">Name</p:outputLabel>
+                            <p:inputText id="name" value="#{productController.currentProduct.name}" required="true"/>
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="description">Description</p:outputLabel>
+                            <p:inputTextarea id="description" value="#{productController.currentProduct.description}"/>
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="brand">Brand</p:outputLabel>
+                            <p:selectOneMenu id="brand" value="#{productController.selectedBrandId}" required="true">
+                                <f:selectItem itemLabel="Select a Brand" itemValue=""/>
+                                <f:selectItems value="#{productController.brands}" var="b"
+                                               itemLabel="#{b.name}" itemValue="#{b.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="category">Category</p:outputLabel>
+                            <p:selectOneMenu id="category" value="#{productController.selectedCategoryId}" required="true">
+                                <f:selectItem itemLabel="Select a Category" itemValue=""/>
+                                <f:selectItems value="#{productController.categories}" var="c"
+                                               itemLabel="#{c.name}" itemValue="#{c.id}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="price" rendered="#{productController.currentProduct.id == null}">Initial Price</p:outputLabel>
+                            <p:inputNumber id="price" value="#{productController.initialPrice}"
+                                           symbol="$" symbolPosition="p"
+                                           decimalSeparator="." thousandSeparator=","
+                                           rendered="#{productController.currentProduct.id == null}" required="true"/>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <h:panelGroup id="dialog-footer">
+                        <p:commandButton value="Save" icon="pi pi-check"
+                                         rendered="#{productController.currentProduct.id == null}"
+                                         actionListener="#{productController.saveProduct}"
+                                         update="manage-product-content :form:dt-products :form:messages"
+                                         process="manage-product-content @this"/>
+
+                        <p:commandButton value="Update" icon="pi pi-check"
+                                         rendered="#{productController.currentProduct.id != null}"
+                                         actionListener="#{productController.onEditProduct}"
+                                         update="manage-product-content :form:dt-products :form:messages"
+                                         process="manage-product-content @this"/>
+
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageProductDialog').hide()" class="ui-button-secondary"/>
+                    </h:panelGroup>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
 </ui:composition>

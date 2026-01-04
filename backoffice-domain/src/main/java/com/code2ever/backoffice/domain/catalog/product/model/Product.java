@@ -5,7 +5,6 @@ import com.code2ever.backoffice.domain.catalog.brand.model.Brand;
 import com.code2ever.backoffice.domain.catalog.category.model.Category;
 import com.code2ever.backoffice.domain.common.BaseEntity;
 import com.code2ever.backoffice.domain.inventory.ProductStock;
-import com.code2ever.backoffice.domain.pricing.ProductPrice;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

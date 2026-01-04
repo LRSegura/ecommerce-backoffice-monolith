@@ -14,7 +14,7 @@
                     <p:toolbarGroup>
                         <p:commandButton value="New Product" icon="pi pi-plus"
                                          actionListener="#{productController.prepareNewProduct}"
-                                         update=":dialogs:manage-product-content :dialogs:dialog-footer"
+                                         update=":mainTabs:dialogs:manage-product-content :mainTabs:dialogs:dialog-footer"
                                          oncomplete="PF('manageProductDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem"/>
                     </p:toolbarGroup>
@@ -45,7 +45,7 @@
 
                     <p:column exportable="false" headerText="Acciones">
                         <p:commandButton icon="pi pi-pencil"
-                                         update=":dialogs:manage-product-content :dialogs:dialog-footer"
+                                         update=":mainTabs:dialogs:manage-product-content :mainTabs:dialogs:dialog-footer"
                                          oncomplete="PF('manageProductDialog').show()"
                                          styleClass="edit-button rounded-button ui-button-success"
                                          process="@this"
@@ -70,7 +70,7 @@
                                  actionListener="#{productController.onDeleteProduct}"
                                  process="@this"
                                  oncomplete="PF('deleteProductDialog').hide()"
-                                 update=":form:dt-products :form:messages" />
+                                 update=":mainTabs:form:dt-products :mainTabs:form:messages" />
                 <p:commandButton value="No" type="button"
                                  styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteProductDialog').hide()" />
@@ -132,13 +132,13 @@
                         <p:commandButton value="Save" icon="pi pi-check"
                                          rendered="#{productController.currentProduct.id == null}"
                                          actionListener="#{productController.saveProduct}"
-                                         update="manage-product-content :form:dt-products :form:messages"
+                                         update="manage-product-content :mainTabs:form:dt-products :mainTabs:form:messages"
                                          process="manage-product-content @this"/>
 
                         <p:commandButton value="Update" icon="pi pi-check"
                                          rendered="#{productController.currentProduct.id != null}"
                                          actionListener="#{productController.onEditProduct}"
-                                         update="manage-product-content :form:dt-products :form:messages"
+                                         update="manage-product-content :mainTabs:form:dt-products :mainTabs:form:messages"
                                          process="manage-product-content @this"/>
 
                         <p:commandButton value="Cancel" icon="pi pi-times"

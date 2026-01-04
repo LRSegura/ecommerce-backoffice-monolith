@@ -84,7 +84,6 @@ public class ProductController extends BaseController implements Serializable {
     public void saveProduct() {
         try {
             if (currentProduct.getId() == null) {
-                // Crear nuevo
                 CreateProductCommand command = new CreateProductCommand(
                         currentProduct.getSku(),
                         currentProduct.getName(),
@@ -105,7 +104,6 @@ public class ProductController extends BaseController implements Serializable {
 
     public void onEditProduct() {
         try {
-            // Actualizar existente
             UpdateProductCommand command = new UpdateProductCommand(
                     currentProduct.getName(),
                     currentProduct.getDescription(),
@@ -136,16 +134,12 @@ public class ProductController extends BaseController implements Serializable {
         executeScript("PF('deleteProductDialog').hide()");
     }
 
-    // Método auxiliar para cargar los IDs cuando se selecciona un producto para editar
     public void selectProductForEdit(Product product) {
         this.currentProduct = product;
         this.selectedBrandId = product.getBrand() != null ? product.getBrand().getId() : null;
         this.selectedCategoryId = product.getCategory() != null ? product.getCategory().getId() : null;
-        // Nota: El precio actual es complejo de obtener de la lista lazy, para editar precio se recomienda un caso de uso separado.
-        // Aquí solo mostramos el precio inicial en la creación.
     }
 
-    // Getters y Setters
     public List<Product> getProducts() { return products; }
     public List<Brand> getBrands() { return brands; }
     public List<Category> getCategories() { return categories; }

@@ -3,103 +3,106 @@
                 xmlns:f="jakarta.faces.core"
                 xmlns:ui="jakarta.faces.facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="template.xhtml"> <ui:define name="content">
-    <h:form id="form">
-        <p:growl id="messages" showDetail="true"/>
+                template="template.xhtml">
 
-        <div class="card">
-            <p:toolbar>
-                <p:toolbarGroup>
-                    <p:commandButton value="New Brand" icon="pi pi-plus"
-                                     actionListener="#{brandController.prepareNewBrand}"
-                                     update=":dialogs:manage-brand-content :dialogs:dialog-footer"
-                                     oncomplete="PF('manageBrandDialog').show()"
-                                     styleClass="ui-button-success" style="margin-right: .5rem"/>
-                </p:toolbarGroup>
-            </p:toolbar>
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
 
-            <p:dataTable id="dt-brands" var="brand" value="#{brandController.brands}"
-                         widgetVar="dtBrands" rowKey="#{brand.id}" paginator="true" rows="10">
+            <div class="card">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="New Brand" icon="pi pi-plus"
+                                         actionListener="#{brandController.prepareNewBrand}"
+                                         update=":mainTabs:dialogs:manage-brand-content :mainTabs:dialogs:dialog-footer"
+                                         oncomplete="PF('manageBrandDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
 
-                <p:column headerText="ID">
-                    <h:outputText value="#{brand.id}"/>
-                </p:column>
+                <p:dataTable id="dt-brands" var="brand" value="#{brandController.brands}"
+                             widgetVar="dtBrands" rowKey="#{brand.id}" paginator="true" rows="10">
 
-                <p:column headerText="Nombre" sortBy="#{brand.name}" filterBy="#{brand.name}">
-                    <h:outputText value="#{brand.name}"/>
-                </p:column>
+                    <p:column headerText="ID">
+                        <h:outputText value="#{brand.id}"/>
+                    </p:column>
 
-                <p:column headerText="Estado">
-                    <p:tag value="#{brand.active ? 'ACTIVO' : 'INACTIVO'}"
-                           severity="#{brand.active ? 'success' : 'danger'}"/>
-                </p:column>
+                    <p:column headerText="Nombre" sortBy="#{brand.name}" filterBy="#{brand.name}">
+                        <h:outputText value="#{brand.name}"/>
+                    </p:column>
 
-                <p:column exportable="false">
-                    <p:commandButton icon="pi pi-pencil"
-                                     update=":dialogs:manage-brand-content :dialogs:dialog-footer"
-                                     oncomplete="PF('manageBrandDialog').show()"
-                                     styleClass="edit-button rounded-button ui-button-success"
-                                     process="@this"
-                                     style="margin-right: .5rem">
-                        <f:setPropertyActionListener value="#{brand}" target="#{brandController.currentBrand}"/>
-                    </p:commandButton>
+                    <p:column headerText="Estado">
+                        <p:tag value="#{brand.active ? 'ACTIVO' : 'INACTIVO'}"
+                               severity="#{brand.active ? 'success' : 'danger'}"/>
+                    </p:column>
 
-                    <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
-                                     oncomplete="PF('deleteBrandDialog').show()">
-                        <f:setPropertyActionListener value="#{brand}" target="#{brandController.currentBrand}" />
-                    </p:commandButton>
-                </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil"
+                                         update=":mainTabs:dialogs:manage-brand-content :mainTabs:dialogs:dialog-footer"
+                                         oncomplete="PF('manageBrandDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this"
+                                         style="margin-right: .5rem">
+                            <f:setPropertyActionListener value="#{brand}" target="#{brandController.currentBrand}"/>
+                        </p:commandButton>
 
-            </p:dataTable>
-        </div>
-    </h:form>
+                        <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteBrandDialog').show()">
+                            <f:setPropertyActionListener value="#{brand}" target="#{brandController.currentBrand}" />
+                        </p:commandButton>
+                    </p:column>
 
-    <h:form id="dialogs">
-        <p:confirmDialog widgetVar="deleteBrandDialog" showEffect="fade" width="300"
-                         message="¿Está seguro de eliminar esta marca?" header="Confirmar" severity="warn">
+                </p:dataTable>
+            </div>
+        </h:form>
 
-            <p:commandButton value="Sí" icon="pi pi-check"
-                             actionListener="#{brandController.onDeleteBrand}"
-                             process="@this"
-                             oncomplete="PF('deleteBrandDialog').hide()"
-                             update=":form:dt-brands :form:messages" />
+        <h:form id="dialogs">
+            <p:confirmDialog widgetVar="deleteBrandDialog" showEffect="fade" width="300"
+                             message="¿Está seguro de eliminar esta marca?" header="Confirmar" severity="warn">
 
-            <p:commandButton value="No" type="button"
-                             styleClass="ui-button-secondary" icon="pi pi-times"
-                             onclick="PF('deleteBrandDialog').hide()" />
-        </p:confirmDialog>
-        <p:dialog header="Details" showEffect="fade" modal="true"
-                  widgetVar="manageBrandDialog" responsive="true">
-            <p:outputPanel id="manage-brand-content" class="ui-fluid">
-                <p:outputPanel rendered="#{not empty brandController.currentBrand}">
-                    <div class="field">
-                        <p:outputLabel for="name">Name</p:outputLabel>
-                        <p:inputText id="name" value="#{brandController.currentBrand.name}" required="true"/>
-                    </div>
-                    <div class="field">
-                        <p:outputLabel for="active" style="display:block; margin-top:10px">Active</p:outputLabel>
-                        <p:toggleSwitch id="active" value="#{brandController.currentBrand.active}"/>
-                    </div>
+                <p:commandButton value="Sí" icon="pi pi-check"
+                                 actionListener="#{brandController.onDeleteBrand}"
+                                 process="@this"
+                                 oncomplete="PF('deleteBrandDialog').hide()"
+                                 update=":mainTabs:form:dt-brands :mainTabs:form:messages" />
+
+                <p:commandButton value="No" type="button"
+                                 styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteBrandDialog').hide()" />
+            </p:confirmDialog>
+
+            <p:dialog header="Details" showEffect="fade" modal="true"
+                      widgetVar="manageBrandDialog" responsive="true">
+                <p:outputPanel id="manage-brand-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty brandController.currentBrand}">
+                        <div class="field">
+                            <p:outputLabel for="name">Name</p:outputLabel>
+                            <p:inputText id="name" value="#{brandController.currentBrand.name}" required="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="active" style="display:block; margin-top:10px">Active</p:outputLabel>
+                            <p:toggleSwitch id="active" value="#{brandController.currentBrand.active}"/>
+                        </div>
+                    </p:outputPanel>
                 </p:outputPanel>
-            </p:outputPanel>
 
-            <f:facet name="footer">
-                <h:panelGroup id="dialog-footer">
-                <p:commandButton id="buttonSave" value="Save" icon="pi pi-check"
-                                 rendered="#{brandController.currentBrand.id == null}"
-                                 actionListener="#{brandController.saveBrand}"
-                                 update="manage-brand-content :form:dt-brands :form:messages"
-                                 process="manage-brand-content @this"/>
-                <p:commandButton id="buttonUpdate" value="Update" icon="pi pi-check"
-                                 rendered="#{brandController.currentBrand.id != null}"
-                                 actionListener="#{brandController.onEditBrand}"
-                                 update="manage-brand-content :form:dt-brands :form:messages"
-                                 process="manage-brand-content @this"/>
-                <p:commandButton value="Cancel" icon="pi pi-times"
-                                 onclick="PF('manageBrandDialog').hide()" class="ui-button-secondary"/>
-                </h:panelGroup>
-            </f:facet>
-        </p:dialog>
-    </h:form>
-</ui:define>
+                <f:facet name="footer">
+                    <h:panelGroup id="dialog-footer">
+                        <p:commandButton value="Save" icon="pi pi-check"
+                                         rendered="#{brandController.currentBrand.id == null}"
+                                         actionListener="#{brandController.saveBrand}"
+                                         update="manage-brand-content :mainTabs:form:dt-brands :mainTabs:form:messages"
+                                         process="manage-brand-content @this"/>
+                        <p:commandButton value="Update" icon="pi pi-check"
+                                         rendered="#{brandController.currentBrand.id != null}"
+                                         actionListener="#{brandController.onEditBrand}"
+                                         update="manage-brand-content :mainTabs:form:dt-brands :mainTabs:form:messages"
+                                         process="manage-brand-content @this"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageBrandDialog').hide()" class="ui-button-secondary"/>
+                    </h:panelGroup>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
 </ui:composition>

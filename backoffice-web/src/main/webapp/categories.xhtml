@@ -14,7 +14,7 @@
                     <p:toolbarGroup>
                         <p:commandButton value="New Category" icon="pi pi-plus"
                                          actionListener="#{categoryController.prepareNewCategory}"
-                                         update=":dialogs:manage-category-content :dialogs:dialog-footer"
+                                         update=":mainTabs:dialogs:manage-category-content :mainTabs:dialogs:dialog-footer"
                                          oncomplete="PF('manageCategoryDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem"/>
                     </p:toolbarGroup>
@@ -38,7 +38,7 @@
 
                     <p:column exportable="false">
                         <p:commandButton icon="pi pi-pencil"
-                                         update=":dialogs:manage-category-content :dialogs:dialog-footer"
+                                         update=":mainTabs:dialogs:manage-category-content :mainTabs:dialogs:dialog-footer"
                                          oncomplete="PF('manageCategoryDialog').show()"
                                          styleClass="edit-button rounded-button ui-button-success"
                                          process="@this"
@@ -63,7 +63,7 @@
                                  actionListener="#{categoryController.onDeleteCategory}"
                                  process="@this"
                                  oncomplete="PF('deleteCategoryDialog').hide()"
-                                 update=":form:dt-categories :form:messages" />
+                                 update=":mainTabs:form:dt-categories :mainTabs:form:messages" />
                 <p:commandButton value="No" type="button"
                                  styleClass="ui-button-secondary" icon="pi pi-times"
                                  onclick="PF('deleteCategoryDialog').hide()" />
@@ -89,12 +89,12 @@
                         <p:commandButton value="Save" icon="pi pi-check"
                                          rendered="#{categoryController.currentCategory.id == null}"
                                          actionListener="#{categoryController.saveCategory}"
-                                         update="manage-category-content :form:dt-categories :form:messages"
+                                         update="manage-category-content :mainTabs:form:dt-categories :mainTabs:form:messages"
                                          process="manage-category-content @this"/>
                         <p:commandButton value="Update" icon="pi pi-check"
                                          rendered="#{categoryController.currentCategory.id != null}"
                                          actionListener="#{categoryController.onEditCategory}"
-                                         update="manage-category-content :form:dt-categories :form:messages"
+                                         update="manage-category-content :mainTabs:form:dt-categories :mainTabs:form:messages"
                                          process="manage-category-content @this"/>
                         <p:commandButton value="Cancel" icon="pi pi-times"
                                          onclick="PF('manageCategoryDialog').hide()" class="ui-button-secondary"/>

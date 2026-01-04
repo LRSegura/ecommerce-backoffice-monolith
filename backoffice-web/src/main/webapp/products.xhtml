@@ -21,7 +21,7 @@
                 </p:toolbar>
 
                 <p:dataTable id="dt-products" var="product" value="#{productController.products}"
-                             stripedRows="true" paginator="true" rows="10" rowKey="#{product.id}">
+                             stripedRows="true" paginator="true" rows="10" rowKey="#{product.id}" paginatorPosition="bottom">
 
                     <p:column headerText="SKU" sortBy="#{product.sku}" filterBy="#{product.sku}">
                         <h:outputText value="#{product.sku}"/>

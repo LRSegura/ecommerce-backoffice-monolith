@@ -21,7 +21,7 @@
                 </p:toolbar>
 
                 <p:dataTable id="dt-brands" var="brand" value="#{brandController.brands}"
-                             widgetVar="dtBrands" rowKey="#{brand.id}" paginator="true" rows="10">
+                             widgetVar="dtBrands" rowKey="#{brand.id}" paginator="true" rows="10" paginatorPosition="bottom">
 
                     <p:column headerText="ID">
                         <h:outputText value="#{brand.id}"/>

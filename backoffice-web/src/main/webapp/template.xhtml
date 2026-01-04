@@ -85,6 +85,36 @@
             border-radius: 4px;
             box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
         }
+
+        /* --- Estilos para Formularios en Dialogs --- */
+
+        /* Contenedor de cada campo */
+        .field {
+            margin-bottom: 1.5rem; /* Espacio vertical generoso entre cada grupo */
+        }
+
+        /* Estilo de la Etiqueta (Label) */
+        .field > label {
+            display: block;        /* Fuerza al label a ocupar su propia línea (arriba del input) */
+            margin-bottom: 0.5rem; /* Espacio entre el texto del label y el input */
+            font-weight: 600;      /* Texto un poco más grueso para jerarquía */
+            color: #374151;        /* Un gris oscuro profesional (no negro puro) */
+        }
+
+        /* Ajuste opcional para TextAreas para que no queden pegados */
+        .ui-inputtextarea {
+            width: 100%;
+        }
+
+
+        .ui-inputfield {
+            background-color: #f9fafb; /* Fondo muy sutil */
+        }
+        .ui-inputfield:focus {
+            background-color: #ffffff; /* Blanco al escribir */
+            border-color: #3B82F6;     /* Borde azul al enfocar */
+        }
+
     </style>
 </h:head>
 
@@ -124,7 +154,7 @@
                 <p:tab title="Información / Auditoría">
                     <div class="card">
                         <h3>Información del Módulo</h3>
-                        <p>Aquí podrías mostrar estadísticas rápidas, historial de cambios recientes o documentación de ayuda para la pantalla actual.</p>
+                        <p>Aquí se puede mostrar estadísticas rápidas, historial de cambios recientes o documentación de ayuda para la pantalla actual.</p>
                         <p:divider />
                         <p:staticMessage severity="info" summary="Estado del Sistema" detail="Todos los servicios operativos." style="width: 100%"/>
                     </div>

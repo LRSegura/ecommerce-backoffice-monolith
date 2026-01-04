@@ -21,7 +21,7 @@
                 </p:toolbar>
 
                 <p:dataTable id="dt-categories" var="category" value="#{categoryController.categories}"
-                             widgetVar="dtCategories" rowKey="#{category.id}" paginator="true" rows="10">
+                             widgetVar="dtCategories" rowKey="#{category.id}" paginator="true" rows="10" paginatorPosition="bottom">
 
                     <p:column headerText="ID">
                         <h:outputText value="#{category.id}"/>

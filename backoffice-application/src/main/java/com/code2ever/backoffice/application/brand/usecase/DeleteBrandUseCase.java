@@ -5,6 +5,7 @@ import com.code2ever.backoffice.application.common.exception.NotFoundException;
 import com.code2ever.backoffice.domain.catalog.brand.model.Brand;
 import com.code2ever.backoffice.domain.catalog.brand.port.BrandRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
@@ -17,6 +18,7 @@ public class DeleteBrandUseCase {
         
     }
 
+    @Inject
     public DeleteBrandUseCase(BrandRepository repository){
         this.repository = repository;
     }

@@ -5,29 +5,29 @@ import jakarta.faces.context.FacesContext;
 
 public class BaseController {
 
-    protected void addMessage(String summary, FacesMessage.Severity severity) {
-        FacesMessage message = new FacesMessage(summary);
+    protected void addMessage(String summary, String detail, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(summary, detail);
         message.setSeverity(severity);
         getFacesContext().addMessage(null, message);
     }
 
     protected void addInfoMessage(String summary) {
-        addMessage(summary, FacesMessage.SEVERITY_INFO);
+        addMessage("Info", summary, FacesMessage.SEVERITY_INFO);
     }
 
     protected void addErrorMessage(String summary) {
-        addMessage(summary, FacesMessage.SEVERITY_ERROR);
+        addMessage("Error", summary, FacesMessage.SEVERITY_ERROR);
     }
 
     protected void addWarnMessage(String summary) {
-        addMessage(summary, FacesMessage.SEVERITY_WARN);
+        addMessage("Warning", summary, FacesMessage.SEVERITY_WARN);
     }
 
     protected FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
 
-    protected void executeScript(String script){
+    protected void executeScript(String script) {
         org.primefaces.PrimeFaces.current().executeScript(script);
     }
 }

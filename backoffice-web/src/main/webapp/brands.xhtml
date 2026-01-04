@@ -39,15 +39,35 @@
                                      update=":dialogs:manage-brand-content :dialogs:dialog-footer"
                                      oncomplete="PF('manageBrandDialog').show()"
                                      styleClass="edit-button rounded-button ui-button-success"
-                                     process="@this">
+                                     process="@this"
+                                     style="margin-right: .5rem">
                         <f:setPropertyActionListener value="#{brand}" target="#{brandController.currentBrand}"/>
                     </p:commandButton>
+
+                    <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
+                                     oncomplete="PF('deleteBrandDialog').show()">
+                        <f:setPropertyActionListener value="#{brand}" target="#{brandController.currentBrand}" />
+                    </p:commandButton>
                 </p:column>
+
             </p:dataTable>
         </div>
     </h:form>
 
     <h:form id="dialogs">
+        <p:confirmDialog widgetVar="deleteBrandDialog" showEffect="fade" width="300"
+                         message="¿Está seguro de eliminar esta marca?" header="Confirmar" severity="warn">
+
+            <p:commandButton value="Sí" icon="pi pi-check"
+                             actionListener="#{brandController.onDeleteBrand}"
+                             process="@this"
+                             oncomplete="PF('deleteBrandDialog').hide()"
+                             update=":form:dt-brands :form:messages" />
+
+            <p:commandButton value="No" type="button"
+                             styleClass="ui-button-secondary" icon="pi pi-times"
+                             onclick="PF('deleteBrandDialog').hide()" />
+        </p:confirmDialog>
         <p:dialog header="Details" showEffect="fade" modal="true"
                   widgetVar="manageBrandDialog" responsive="true">
             <p:outputPanel id="manage-brand-content" class="ui-fluid">

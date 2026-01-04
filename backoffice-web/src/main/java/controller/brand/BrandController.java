@@ -5,6 +5,7 @@ import com.code2ever.backoffice.application.brand.dto.BrandUpdateRequest;
 import com.code2ever.backoffice.application.brand.usecase.CreateBrandUseCase;
 import com.code2ever.backoffice.application.brand.usecase.DeleteBrandUseCase;
 import com.code2ever.backoffice.application.brand.usecase.UpdateBrandUseCase;
+import com.code2ever.backoffice.application.common.exception.BusinessRuleException;
 import com.code2ever.backoffice.domain.catalog.brand.model.Brand;
 import com.code2ever.backoffice.domain.catalog.brand.port.BrandRepository;
 import controller.common.BaseController;
@@ -88,6 +89,10 @@ public class BrandController extends BaseController implements Serializable {
             loadBrands();
             addInfoMessage("Brand deleted successfully.");
         } catch (Exception e) {
+            if (e instanceof BusinessRuleException){
+                addErrorMessage(e.getMessage());
+                return;
+            }
             addErrorMessage("Error deleting brand. ");
         }
         executeScript("PF('manageBrandDialog').hide()");

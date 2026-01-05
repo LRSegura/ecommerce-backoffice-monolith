@@ -47,16 +47,16 @@ public class JpaProductPriceRepository extends BaseJpaRepository<ProductPrice> i
         // Lógica compleja simplificada: Buscar cualquier precio que empiece antes de que termine el nuevo y termine después de que empiece el nuevo
         // Si 'to' es null (indefinido), la lógica cambia ligeramente.
         String jpql = """
-            SELECT p FROM ProductPrice p\s
-            WHERE p.product.id = :pid\s
-            AND p.priceType = :ptype\s
-            AND p.active = true\s
+            SELECT p FROM ProductPrice p
+            WHERE p.product.id = :pid
+            AND p.priceType = :ptype
+            AND p.active = true
             AND (
-                (:end IS NULL AND (p.validTo IS NULL OR p.validTo > :start))\s
-                OR\s
-                (:end IS NOT NULL AND p.validFrom < :end AND (p.validTo IS NULL OR p.validTo > :start))
+                (CAST(:end AS timestamp) IS NULL AND (p.validTo IS NULL OR p.validTo > CAST(:start AS timestamp)))
+                OR
+                (CAST(:end AS timestamp) IS NOT NULL AND p.validFrom < CAST(:end AS timestamp) AND (p.validTo IS NULL OR p.validTo > CAST(:start AS timestamp)))
             )
-       \s""";
+        """;
         return em.createQuery(jpql, ProductPrice.class)
                 .setParameter("pid", productId)
                 .setParameter("ptype", type)

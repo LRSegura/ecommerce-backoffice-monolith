@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -53,6 +54,14 @@ public class Product extends BaseEntity {
 
     public boolean isInactive() {
         return status == ProductStatus.INACTIVE;
+    }
+
+    public BigDecimal getCurrentPrice() {
+        return productPrices.stream()
+                .filter(ProductPrice::getActive)
+                .findFirst()
+                .map(ProductPrice::getPrice)
+                .orElse(BigDecimal.ZERO);
     }
 
     @Override

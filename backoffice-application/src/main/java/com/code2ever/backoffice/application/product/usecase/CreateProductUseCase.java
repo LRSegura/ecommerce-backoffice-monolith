@@ -10,12 +10,16 @@ import com.code2ever.backoffice.domain.catalog.brand.port.BrandRepository;
 import com.code2ever.backoffice.domain.catalog.category.model.Category;
 import com.code2ever.backoffice.domain.catalog.category.port.CategoryRepository;
 import com.code2ever.backoffice.domain.catalog.product.model.Product;
+import com.code2ever.backoffice.domain.catalog.product.model.ProductPrice;
 import com.code2ever.backoffice.domain.catalog.product.model.ProductStatus;
+import com.code2ever.backoffice.domain.catalog.product.port.ProductPriceRepository;
 import com.code2ever.backoffice.domain.catalog.product.port.ProductRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+
+import java.time.LocalDateTime;
 
 @ApplicationScoped
 public class CreateProductUseCase {
@@ -23,6 +27,7 @@ public class CreateProductUseCase {
     private ProductRepository productRepository;
     private BrandRepository brandRepository;
     private CategoryRepository categoryRepository;
+    private ProductPriceRepository priceRepository;
 
     public CreateProductUseCase(){
     }
@@ -30,10 +35,12 @@ public class CreateProductUseCase {
     @Inject
     public CreateProductUseCase(ProductRepository productRepository,
                                 BrandRepository brandRepository,
-                                CategoryRepository categoryRepository) {
+                                CategoryRepository categoryRepository,
+                                ProductPriceRepository priceRepository) {
         this.productRepository = productRepository;
         this.brandRepository = brandRepository;
         this.categoryRepository = categoryRepository;
+        this.priceRepository = priceRepository;
     }
 
     @Transactional
@@ -55,8 +62,14 @@ public class CreateProductUseCase {
         product.setBrand(brand);
         product.setCategory(category);
         product.setStatus(ProductStatus.ACTIVE);
-
         productRepository.save(product);
+
+        ProductPrice price = new ProductPrice();
+        price.setPrice(dto.initialPrice());
+        price.setValidFrom(LocalDateTime.now());
+        price.setCurrency("USD");
+        price.setActive(true);
+        priceRepository.save(price);
 
         return ProductViewMapper.toView(product, dto.initialPrice());
     }

@@ -39,6 +39,12 @@
                         <h:outputText value="#{product.brand.name}"/>
                     </p:column>
 
+                    <p:column headerText="Price">
+                        <h:outputText value="#{product.getCurrentPrice()}">
+                            <f:convertNumber type="currency" currencySymbol="$" minFractionDigits="2" maxFractionDigits="2"/>
+                        </h:outputText>
+                    </p:column>
+
                     <p:column headerText="Estado">
                         <p:tag value="#{product.status}" severity="#{product.active ? 'success' : 'danger'}"/>
                     </p:column>
@@ -53,10 +59,21 @@
                                          actionListener="#{productController.selectProductForEdit(product)}">
                         </p:commandButton>
 
+                        <p:commandButton icon="pi pi-dollar"
+                                         styleClass="rounded-button ui-button-secondary ui-button-outlined"
+                                         style="margin-right: .5rem"
+                                         actionListener="#{productPriceController.loadPrices(product.id)}"
+                                         update=":mainTabs:priceDialogForm"
+                                         oncomplete="PF('managePricesDialog').show()"
+                                         process="@this">
+                        </p:commandButton>
+
                         <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
                                          oncomplete="PF('deleteProductDialog').show()">
                             <f:setPropertyActionListener value="#{product}" target="#{productController.currentProduct}" />
                         </p:commandButton>
+
+
                     </p:column>
 
                 </p:dataTable>
@@ -147,5 +164,86 @@
                 </f:facet>
             </p:dialog>
         </h:form>
+
+        <p:dialog header="Historial de Precios" showEffect="fade" modal="true"
+                  widgetVar="managePricesDialog" responsive="true" width="700">
+
+            <h:form id="priceDialogForm">
+                <p:growl id="priceMsg" showDetail="true"/>
+
+                <p:panel header="Asignar Nuevo Precio" styleClass="mb-3" toggleable="true">
+                    <div class="ui-fluid formgrid grid">
+                        <div class="field col-12 md:6">
+                            <p:outputLabel for="newPrice" value="Monto" />
+                            <p:inputNumber id="newPrice" value="#{productPriceController.newAmount}"
+                                           symbol="$" symbolPosition="p" decimalSeparator="." thousandSeparator=","
+                                           required="true"/>
+                        </div>
+                        <div class="field col-12 md:6">
+                            <p:outputLabel for="priceType" value="Tipo de Precio" />
+                            <p:selectOneMenu id="priceType" value="#{productPriceController.newType}">
+                                <f:selectItems value="#{productPriceController.priceTypes}" var="type"
+                                               itemLabel="#{type.description}" itemValue="#{type}"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="field col-12 md:6">
+                            <p:outputLabel for="validFrom" value="Válido Desde" />
+                            <p:datePicker id="validFrom" value="#{productPriceController.newValidFrom}"
+                                          showTime="true" pattern="dd/MM/yyyy HH:mm"/>
+                        </div>
+                        <div class="field col-12 md:6">
+                            <p:outputLabel for="validTo" value="Válido Hasta (Opcional)" />
+                            <p:datePicker id="validTo" value="#{productPriceController.newValidTo}"
+                                          showTime="true" pattern="dd/MM/yyyy HH:mm"/>
+                        </div>
+                        <div class="col-12">
+                            <p:commandButton value="Agregar Precio" icon="pi pi-plus"
+                                             actionListener="#{productPriceController.addPrice}"
+                                             update="priceTable priceMsg @parent"
+                                             process="@form"/>
+                        </div>
+                    </div>
+                </p:panel>
+
+                <p:divider />
+
+                <p:dataTable id="priceTable" var="price" value="#{productPriceController.priceHistory}"
+                             paginator="true" rows="5" size="small" stripedRows="true">
+
+                    <f:facet name="header">
+                        Historial de Precios (Lista)
+                    </f:facet>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{price.price}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Tipo">
+                        <p:tag value="#{price.priceType}" severity="info"/>
+                    </p:column>
+
+                    <p:column headerText="Desde">
+                        <h:outputText value="#{price.validFrom}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="localDateTime"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Hasta">
+                        <h:outputText value="#{price.validTo == null ? 'Indefinido' : price.validTo}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="localDateTime"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Estado">
+                        <p:tag value="#{price.active ? 'ACTIVO' : 'INACTIVO'}"
+                               severity="#{price.active ? 'success' : 'warning'}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

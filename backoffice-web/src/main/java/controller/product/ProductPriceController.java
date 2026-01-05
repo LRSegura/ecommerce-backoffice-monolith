@@ -77,10 +77,19 @@ public class ProductPriceController extends BaseController implements Serializab
         }
     }
 
+
+
     // Getters y Setters para todos los campos...
     public List<ProductPrice> getPriceHistory() { return priceHistory; }
     public BigDecimal getNewAmount() { return newAmount; }
     public void setNewAmount(BigDecimal newAmount) { this.newAmount = newAmount; }
     // ... agrega el resto
     public PriceType[] getPriceTypes() { return PriceType.values(); }
+
+    public PriceType getNewType() { return newType; }
+    public void setNewType(PriceType newType) { this.newType = newType; }
+    public LocalDateTime getNewValidFrom() { return newValidFrom; }
+    public void setNewValidFrom(LocalDateTime newValidFrom) { this.newValidFrom = newValidFrom; }
+    public LocalDateTime getNewValidTo() { return newValidTo; }
+    public void setNewValidTo(LocalDateTime newValidTo) { this.newValidTo = newValidTo; }
 }
